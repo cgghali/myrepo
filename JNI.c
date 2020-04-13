@@ -9,8 +9,8 @@ JNIEnv* create_vm(JavaVM **jvm)
     //JavaVMOption* options = new JavaVMOption[1];
     args.version = JNI_VERSION_1_6;
     args.nOptions = 1;
-//    options.optionString = "-cp=.:./conviva_automation_sling_poc.jar";
-    options.optionString = "-Djava.class.path=./conviva-validation-automation-library.jar";
+//    options.optionString = "-cp=.:./poc.jar";
+    options.optionString = "-Djava.class.path=./automation-library.jar";
     args.options = &options;
     args.ignoreUnrecognized = 0;
     int rv;
@@ -42,17 +42,17 @@ void invoke_class(JNIEnv* env)
     main_method = (*env)->GetStaticMethodID(env, hello_world_class, "main", "([Ljava/lang/String;)V");
     square_method = (*env)->GetStaticMethodID(env, hello_world_class, "square", "(I)I");
     power_method = (*env)->GetStaticMethodID(env, hello_world_class, "power", "(II)I");
-    get_clientID = (*env)->GetStaticMethodID(env, hello_world_class,"getClientID","(I)I");
-    validate_Concurent_Plays = (*env)->GetStaticMethodID(env, hello_world_class, "ValidateConcurentPlays","(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)I");
+    get_clientID = (*env)->GetStaticMethodID(env, hello_world_class,"getID","(I)I");
+    validate_Concurent_Plays = (*env)->GetStaticMethodID(env, hello_world_class, "Plays","(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)I");
     (*env)->CallStaticVoidMethod(env, hello_world_class, main_method, NULL);
     printf("%d squared is %d\n", number,
         (*env)->CallStaticIntMethod(env, hello_world_class, square_method, number));
     printf("%d raised to the %d power is %d\n", number, exponent,	
         (*env)->CallStaticIntMethod(env, hello_world_class, power_method, number, exponent));
  printf("%d Client ID : %d\n",id,       
-        (*env)->CallStaticIntMethod(env, hello_world_class, get_clientID, id));
+        (*env)->CallStaticIntMethod(env, hello_world_class, ID, id));
 printf("%d Return ID : %d\n",id,
-	(*env)->CallStaticIntMethod(env, hello_world_class, validate_Concurent_Plays,(*env)->NewStringUTF(env, "6059760.6085861.5505271.12345680"),(*env)->NewStringUTF(env, "1691359385")
+	(*env)->CallStaticIntMethod(env, hello_world_class, validate_Concurent_Plays,(*env)->NewStringUTF(env, "6059760"),(*env)->NewStringUTF(env, "1691359385")
 ,(*env)->NewStringUTF(env, isCamValidation))); 
 }
 
